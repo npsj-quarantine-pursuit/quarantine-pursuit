@@ -79,6 +79,7 @@ class CreateQuiz extends Component{
         if (this.state.showPlay === true) {
             return <Link to={"/play"}>Play Quiz</Link>;
         }
+        
         return (
             <form>
                 <select name="selectedCategory" id="categories" onChange={this.handleChange}>

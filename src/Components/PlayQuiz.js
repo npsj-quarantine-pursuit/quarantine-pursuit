@@ -4,7 +4,9 @@ class PlayQuiz extends Component {
   constructor() {
     super() 
     this.state = {
-      currentQuestion: {},
+      currentQuestion: {
+        question: '',
+      },
       questionNumber: 0,
     }
   }
@@ -16,9 +18,10 @@ class PlayQuiz extends Component {
   }
 
   render() {
+
     return (
       <div>
-        
+        <h2>{this.state.currentQuestion.question}</h2>
       </div>
     )
   }
