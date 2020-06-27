@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ShowFinalScore from "./ShowFinalScore";
 
 class PlayQuiz extends Component {
   constructor() {
@@ -10,6 +11,8 @@ class PlayQuiz extends Component {
       },
       questionNumber: 0,
       correctPosition: 1,
+      score: 7,
+      showFinalScore: false,
     }
   }
 
@@ -23,14 +26,25 @@ class PlayQuiz extends Component {
   }
 
   handleClick = () => {
-    this.setCorrectPosition();
-    console.log(this.state.currentQuestion);
     let questionNumber = this.state.questionNumber
     questionNumber++;
-    this.setState({
-      questionNumber,
-      currentQuestion: this.props.quiz[questionNumber]
-    })
+    
+    if (questionNumber < this.props.quiz.length ) {
+      this.setCorrectPosition();
+      console.log(this.state.currentQuestion);
+      this.setState({
+        questionNumber,
+        currentQuestion: this.props.quiz[questionNumber]
+      })
+    } else {
+      console.log("end");
+      
+      this.setState({
+        showFinalScore: true
+      })
+      
+      
+    }
   }
 
   setCorrectPosition = () => {
@@ -54,7 +68,9 @@ class PlayQuiz extends Component {
       positionFour = <p>{this.state.currentQuestion.correct_answer}</p>
     }
     return (
+
       <div>
+        { this.state.showFinalScore ? <ShowFinalScore score={this.state.score}/> : null }
         <h2>{this.state.currentQuestion.question}</h2>
         {positionOne}
         <button onClick={this.handleClick}>{this.state.currentQuestion.incorrect_answers[0]}</button>
