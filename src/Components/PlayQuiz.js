@@ -70,7 +70,7 @@ class PlayQuiz extends Component {
     return (
 
       <div>
-        { this.state.showFinalScore ? <ShowFinalScore score={this.state.score}/> : null }
+        { this.state.showFinalScore ? <ShowFinalScore quiz={this.props.quiz} score={this.state.score}/> : null }
         <h2>{this.state.currentQuestion.question}</h2>
         {positionOne}
         <button onClick={this.handleClick}>{this.state.currentQuestion.incorrect_answers[0]}</button>

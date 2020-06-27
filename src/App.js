@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import './index.scss';
+import firebase from './Components/firebase.js';
 
 // Components
 import CreateQuiz from './Components/CreateQuiz';
@@ -25,6 +26,18 @@ class App extends Component {
     console.log(this.state.quiz);
   }
 
+  selectQuiz = (quiz) => {
+    const dbRef = firebase.database().ref(quiz);
+    dbRef.once("value", (response) => {
+      const data = response.val();
+      this.setState({
+        quiz,
+      })
+    })
+
+
+  }
+
   render() {
     return (
       <Router>
@@ -34,11 +47,13 @@ class App extends Component {
           </header>
           <main>
             <Link className="button" to="/create">Create a Quiz!</Link>
-            {/* <Link className="button" to="/select">Select an Existing Quiz!</Link> */}
+            <Link className="button" to="/select">Select an Existing Quiz!</Link>
             <Route path="/create">
               <CreateQuiz callQuiz={this.callQuiz} />
             </Route>
-            {/* <Route path="/select" component={SelectQuiz} /> */}
+            <Route path="/select">
+              <SelectQuiz selectQuiz={this.selectQuiz}/>
+            </Route>
             <Route path="/play">
               <PlayQuiz quiz={this.state.quiz} />
             </Route>
