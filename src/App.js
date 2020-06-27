@@ -12,17 +12,17 @@ class App extends Component {
     super();
     this.state = {
       activeQuizPath: "",
-      quiz: []
+      quiz: [{}]
     }
   }
-  
+
   callQuiz = (quiz) => {
     this.setState({
       quiz,
     })
     console.log(this.state.quiz);
   }
-  
+
   render() {
     return (
       <Router>
@@ -34,11 +34,11 @@ class App extends Component {
             <Link className="button" to="/create">Create a Quiz!</Link>
             {/* <Link className="button" to="/select">Select an Existing Quiz!</Link> */}
             <Route path="/create">
-              <CreateQuiz callQuiz={this.callQuiz}/>
+              <CreateQuiz callQuiz={this.callQuiz} />
             </Route>
             {/* <Route path="/select" component={SelectQuiz} /> */}
             <Route path="/play">
-              <PlayQuiz quiz={this.state.quiz}/>
+              <PlayQuiz quiz={this.state.quiz} />
             </Route>
           </main>
         </div>

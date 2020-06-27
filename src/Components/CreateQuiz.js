@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-class CreateQuiz extends Component{
+class CreateQuiz extends Component {
     constructor() {
         super();
         this.state = {
@@ -15,7 +15,7 @@ class CreateQuiz extends Component{
             showPlay: false,
         }
     }
-    
+
     componentDidMount() {
         axios({
             url: 'https://opentdb.com/api_category.php',
@@ -43,9 +43,9 @@ class CreateQuiz extends Component{
         })
     }
 
-    
+
     handleChange = (e) => {
-        this.setState ({
+        this.setState({
             [e.target.name]: e.target.value
         })
     }
@@ -62,11 +62,12 @@ class CreateQuiz extends Component{
                 category: this.state.selectedCategory,
                 difficulty: this.state.difficulty,
                 token: this.state.token,
+                type: "multiple",
             }
         }).then((response) => {
             quiz = response.data.results;
             this.props.callQuiz(quiz);
-
+            console.log(quiz);
             this.setState({
                 showPlay: true
             })
@@ -74,16 +75,16 @@ class CreateQuiz extends Component{
     }
 
 
-    render (){
+    render() {
 
         if (this.state.showPlay === true) {
             return <Link to={"/play"}>Play Quiz</Link>;
         }
-        
+
         return (
             <form>
                 <select name="selectedCategory" id="categories" onChange={this.handleChange}>
-                    {this.state.categories.map((obj, id) =>{
+                    {this.state.categories.map((obj, id) => {
                         return (<option key={id} value={obj.id}>{obj.name}</option>)
                     })}
                 </select>
