@@ -22,6 +22,17 @@ class PlayQuiz extends Component {
     console.log(this.state.currentQuestion);
   }
 
+  handleClick = () => {
+    this.setCorrectPosition();
+    console.log(this.state.currentQuestion);
+    let questionNumber = this.state.questionNumber
+    questionNumber++;
+    this.setState({
+      questionNumber,
+      currentQuestion: this.props.quiz[questionNumber]
+    })
+  }
+
   setCorrectPosition = () => {
     let correctPosition = Math.floor((Math.random() * 4) + 1);
     this.setState({ correctPosition })
@@ -46,11 +57,11 @@ class PlayQuiz extends Component {
       <div>
         <h2>{this.state.currentQuestion.question}</h2>
         {positionOne}
-        <p>{this.state.currentQuestion.incorrect_answers[0]}</p>
+        <button onClick={this.handleClick}>{this.state.currentQuestion.incorrect_answers[0]}</button>
         {positionTwo}
-        <p>{this.state.currentQuestion.incorrect_answers[1]}</p>
+        <button>{this.state.currentQuestion.incorrect_answers[1]}</button>
         {positionThree}
-        <p>{this.state.currentQuestion.incorrect_answers[2]}</p>
+        <button onClick={this.handleClick}>{this.state.currentQuestion.incorrect_answers[2]}</button>
         {positionFour}
       </div>
     )
