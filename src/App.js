@@ -12,7 +12,9 @@ class App extends Component {
     super();
     this.state = {
       activeQuizPath: "",
-      quiz: [{}]
+      quiz: [{
+        incorrect_answers: [],
+      }]
     }
   }
 

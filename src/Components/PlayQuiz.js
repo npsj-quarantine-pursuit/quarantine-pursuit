@@ -6,6 +6,7 @@ class PlayQuiz extends Component {
     this.state = {
       currentQuestion: {
         question: ' ',
+        incorrect_answers: ' ',
       },
       questionNumber: 0,
       correctPosition: 1,
@@ -17,7 +18,8 @@ class PlayQuiz extends Component {
     this.setState({
       currentQuestion: firstQuestion,
     })
-    console.log(this.props.quiz[0])
+    this.setCorrectPosition();
+    console.log(this.state.currentQuestion);
   }
 
   setCorrectPosition = () => {
@@ -27,13 +29,29 @@ class PlayQuiz extends Component {
 
   render() {
 
+    let positionOne;
+    let positionTwo;
+    let positionThree;
+    let positionFour;
+    if (this.state.correctPosition === 1) {
+      positionOne = <p>{this.state.currentQuestion.correct_answer}</p>
+    } else if (this.state.correctPosition === 2) {
+      positionTwo = <p>{this.state.currentQuestion.correct_answer}</p>
+    } else if (this.state.correctPosition === 3) {
+      positionThree = <p>{this.state.currentQuestion.correct_answer}</p>
+    } else if (this.state.correctPosition === 4) {
+      positionFour = <p>{this.state.currentQuestion.correct_answer}</p>
+    }
     return (
       <div>
         <h2>{this.state.currentQuestion.question}</h2>
+        {positionOne}
         <p>{this.state.currentQuestion.incorrect_answers[0]}</p>
+        {positionTwo}
         <p>{this.state.currentQuestion.incorrect_answers[1]}</p>
+        {positionThree}
         <p>{this.state.currentQuestion.incorrect_answers[2]}</p>
-
+        {positionFour}
       </div>
     )
   }
