@@ -10,7 +10,6 @@ class SelectQuiz extends Component {
         this.state = {
             quizList: [],
         }
-       
     }
 
     componentDidMount() {
@@ -23,13 +22,11 @@ class SelectQuiz extends Component {
             this.setState({
                 quizList,
             })
-
-            console.log(this.state.quizList);
-            })
+        })
     }
 
-    handleClick = (quiz) => {
-        this.props.selectQuiz(quiz);
+    handleClick = (e) => {
+        this.props.selectQuiz(e.target.name);
     }
 
     render() {
@@ -38,7 +35,9 @@ class SelectQuiz extends Component {
             {this.state.quizList.map((quiz) => {
                 return (
                     <div key={quiz}>
-                    <Link to="/play"><button onClick={this.handleClick}>{quiz}</button></Link>
+                    {/* <Link to="/x"> */}
+                        <button name={quiz} onClick={this.handleClick}>{quiz}</button>
+                    {/* </Link> */}
                     </div>
                 )
             })}

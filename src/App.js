@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
 import './index.scss';
 import firebase from './Components/firebase.js';
 
@@ -15,7 +15,8 @@ class App extends Component {
       activeQuizPath: "",
       quiz: [{
         incorrect_answers: [],
-      }]
+      }],
+      dataReady: false,
     }
   }
 
@@ -29,12 +30,16 @@ class App extends Component {
   selectQuiz = (quiz) => {
     const dbRef = firebase.database().ref(quiz);
     dbRef.once("value", (response) => {
-      const data = response.val();
+      const quiz = response.val();
       this.setState({
         quiz,
       })
+    }).then(() => {
+      console.log('ding')
+      this.setState({
+        dataReady: true,
+      })
     })
-
 
   }
 
@@ -46,14 +51,19 @@ class App extends Component {
             <h1>Quarantine Pursuit</h1>
           </header>
           <main>
-            <Link className="button" to="/create">Create a Quiz!</Link>
-            <Link className="button" to="/select">Select an Existing Quiz!</Link>
+            <Route exact path="/">
+              <Link className="button" to="/create">Create a Quiz!</Link>
+              <Link className="button" to="/select">Select an Existing Quiz!</Link>
+            </Route>
             <Route path="/create">
               <CreateQuiz callQuiz={this.callQuiz} />
             </Route>
             <Route path="/select">
               <SelectQuiz selectQuiz={this.selectQuiz}/>
             </Route>
+
+            { this.state.dataReady ? <Redirect to="/play"/> : null }
+
             <Route path="/play">
               <PlayQuiz quiz={this.state.quiz} />
             </Route>
