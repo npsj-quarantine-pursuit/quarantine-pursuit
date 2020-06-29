@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/quarantine-pursuit/static/css/main.0539492b.chunk.css",
+    "main.js": "/quarantine-pursuit/static/js/main.05842fb7.chunk.js",
+    "main.js.map": "/quarantine-pursuit/static/js/main.05842fb7.chunk.js.map",
+    "runtime-main.js": "/quarantine-pursuit/static/js/runtime-main.a166d634.js",
+    "runtime-main.js.map": "/quarantine-pursuit/static/js/runtime-main.a166d634.js.map",
+    "static/js/2.6436c879.chunk.js": "/quarantine-pursuit/static/js/2.6436c879.chunk.js",
+    "static/js/2.6436c879.chunk.js.map": "/quarantine-pursuit/static/js/2.6436c879.chunk.js.map",
+    "index.html": "/quarantine-pursuit/index.html",
+    "precache-manifest.3e1bc09fbe76235b5b575da8a506a0c1.js": "/quarantine-pursuit/precache-manifest.3e1bc09fbe76235b5b575da8a506a0c1.js",
+    "service-worker.js": "/quarantine-pursuit/service-worker.js",
+    "static/css/main.0539492b.chunk.css.map": "/quarantine-pursuit/static/css/main.0539492b.chunk.css.map",
+    "static/js/2.6436c879.chunk.js.LICENSE.txt": "/quarantine-pursuit/static/js/2.6436c879.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a166d634.js",
+    "static/js/2.6436c879.chunk.js",
+    "static/css/main.0539492b.chunk.css",
+    "static/js/main.05842fb7.chunk.js"
+  ]
+}
