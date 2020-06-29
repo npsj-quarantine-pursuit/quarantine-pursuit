@@ -72,7 +72,7 @@ class PlayQuiz extends Component {
       if (this.state.position === i || (i === 2 && this.state.position == 3)) {
         return (
           <div>
-            <button onClick={this.handleClick}>{atob(this.state.currentQuestion.correct_answer)}</button>  
+            <button onClick={this.correct}>{atob(this.state.currentQuestion.correct_answer)}</button>  
             <button onClick={this.handleClick}>{atob(answer)}</button>
           </div>
         );
