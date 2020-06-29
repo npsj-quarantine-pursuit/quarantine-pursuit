@@ -12,15 +12,15 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 @import url('https://fonts.googleapis.com/css2?family=Barlow&family=Merienda&display=swap');
 
 //variables;
-$primaryColor: #AFEDFF;
-$secondaryColor: #FFB0C6;
-$tertiaryColor: #9BD694;
+$primaryColor: #040404;
+$secondaryColor: #AFEDFF;
+$tertiaryColor: #FFB0C6;
+$quaternaryColor: #9BD694;
 
-//fonts
 $primaryFont: 'Barlow', sans-serif;
 $secondaryFont: 'Merienda', cursive;
 
-//mixin
+//mixins
 @mixin center {
   display: flex;
   justify-content: center;
@@ -29,6 +29,8 @@ $secondaryFont: 'Merienda', cursive;
 
 body {
   font-family: $primaryFont;
+  color: $primaryColor;
+  background: $secondaryColor;
 }
 
 header {

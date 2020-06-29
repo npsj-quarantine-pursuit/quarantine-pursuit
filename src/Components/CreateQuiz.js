@@ -17,6 +17,7 @@ class CreateQuiz extends Component {
     }
 
     componentDidMount() {
+
         axios({
             url: 'https://opentdb.com/api_category.php',
             method: 'GET',
@@ -63,6 +64,7 @@ class CreateQuiz extends Component {
                 difficulty: this.state.difficulty,
                 token: this.state.token,
                 type: "multiple",
+                encode: 'base64'
             }
         }).then((response) => {
             quiz = response.data.results;
