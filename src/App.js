@@ -14,6 +14,8 @@ class App extends Component {
     this.state = {
       activeQuizPath: "",
       quiz: [{
+        question: '',
+        correctAnswer: '',
         incorrect_answers: [],
       }],
       dataReady: false,
@@ -35,12 +37,24 @@ class App extends Component {
         quiz,
       })
     }).then(() => {
-      console.log('ding')
       this.setState({
         dataReady: true,
       })
     })
 
+  }
+
+  reset = () => {
+    this.setState({
+      activeQuizPath: "",
+      quiz: [{
+        question: '',
+        correctAnswer: '',
+        incorrect_answers: [],
+      }],
+      dataReady: false,
+    })
+    console.log('reset');
   }
 
   render() {
@@ -65,7 +79,7 @@ class App extends Component {
             { this.state.dataReady ? <Redirect to="/play"/> : null }
 
             <Route path="/play">
-              <PlayQuiz quiz={this.state.quiz} />
+              <PlayQuiz quiz={this.state.quiz} reset={this.reset}/>
             </Route>
           </main>
         </div>

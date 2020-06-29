@@ -65,28 +65,48 @@ class PlayQuiz extends Component {
     })
   }
 
+  reset = () => {
+    this.setState({
+      currentQuestion: {
+        correctAnswer: '',
+        question: '',
+        incorrect_answers: [],
+      },
+      questionNumber: 0,
+      position: 1,
+      score: 0,
+      showFinalScore: false,
+    })
+    this.props.reset();
+  }
+
   render() {
     let incorrectAnswers = this.state.currentQuestion.incorrect_answers;
     // Because array is only 3 objects long, the || statement prints it if the correct answer is in 4th position
     let listIncorrectAnswers = incorrectAnswers.map((answer, i) => {
       if (this.state.position === i || (i === 2 && this.state.position == 3)) {
         return (
-          <div>
+          <div key={i}>
             <button onClick={this.correct}>{atob(this.state.currentQuestion.correct_answer)}</button>  
             <button onClick={this.handleClick}>{atob(answer)}</button>
           </div>
         );
       } else { 
-        return <button onClick={this.handleClick}>{atob(answer)}</button>
+        return <button key={i} onClick={this.handleClick}>{atob(answer)}</button>
       }
     });
      
 
+
     return (
       <div>
-        { this.state.showFinalScore ? <ShowFinalScore quiz={this.props.quiz} score={this.state.score}/> : null }
-        <h2>{atob(this.state.currentQuestion.question)}</h2>
-        {listIncorrectAnswers}
+        {this.state.showFinalScore ? <ShowFinalScore quiz={this.props.quiz} score={this.state.score} reset={this.reset} /> : ( 
+          <div>
+            <h2>{atob(this.state.currentQuestion.question)}</h2> {listIncorrectAnswers}
+          </div>
+         )}
+        
+        
       </div>
     )
   }

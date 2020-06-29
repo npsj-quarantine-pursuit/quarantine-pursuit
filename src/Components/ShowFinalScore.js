@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import firebase from './firebase';
 
 class ShowFinalScore extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             quizName: "",
         }
@@ -20,13 +20,14 @@ class ShowFinalScore extends Component {
         const dbRef = firebase.database().ref();
         dbRef.child(quizName).set(this.props.quiz);
     }
+
    
     render() {
         return (
             <div>
         <h2>Your Score is: {this.props.score}/{this.props.quiz.length}</h2>
         
-        <Link to="/"><button>Home</button></Link>
+        <Link to="/"><button onClick={this.props.reset}>Home</button></Link>
         <button onClick={this.save}>Save Quiz</button>
       </div>
     );
