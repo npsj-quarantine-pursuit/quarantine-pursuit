@@ -27,6 +27,15 @@ $secondaryFont: 'Merienda', cursive;
   align-items: center;
 }
 
+h1 {
+  font-family: $secondaryFont;
+}
+
+a {
+  text-decoration: none;
+  color: $primaryColor;
+}
+
 body {
   font-family: $primaryFont;
   color: $primaryColor;
@@ -35,7 +44,12 @@ body {
 
 header {
   @include center;
-  height: 100px
+
+}
+
+header img {
+  width: 50%;
+  margin-top: 40px;
 }
 
 main {
@@ -43,55 +57,84 @@ main {
   min-height: calc(100vh - 100px)
 }
 
-.button {
+button {
   margin: 50px;
 }
 
+// LoadingAnimation.js
+.loading-container {
+  font-size: 80px;
+  margin: 120px auto 200px;
+  svg {
+    animation: spin 2s linear infinite;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg)
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
+input {
+  border-radius: 5px;
+  box-shadow: none;
+  font-size: 20px;
+}
+
+Select {
+  font-size: 20px;
+  padding: 5px;
+}
+
+label {
+ font-family: $secondaryFont ;
+}
+
+
+/* BUTTON STYLING IDEA TAKEN FROM  https://codepen.io/fossheim/pen/RwPeVKG*/
+button {
+      display: block;
+      cursor: pointer;
+      outline: none;
+      border: none;
+      background-color: $tertiaryColor;
+      width: 400px;
+      height: 70px;
+      border-radius: 30px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      background-size: 100% 100%;
+      box-shadow: 0 0 0 7px $tertiaryColor  inset;
+      margin-bottom: 15px;
+      margin-top: 15px;
+    }
+    button:hover {
+      background-image: linear-gradient(
+        145deg,
+        transparent 10%,
+        $quaternaryColor 10% 20%,
+        transparent 20% 30%,
+        $quaternaryColor 30% 40%,
+        transparent 40% 50%,
+        $quaternaryColor  50% 60%,
+        transparent 60% 70%,
+        $quaternaryColor  70% 80%,
+        transparent 80% 90%,
+        $quaternaryColor 90% 100%
+      );
+      animation: background 3s linear infinite;
+    }
+    @keyframes background {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 400px 0;
+      }
+    }
 
 
 
-
-
-
-
-// .button {
-//   display: block;
-//   cursor: pointer;
-//   outline: none;
-//   border: none;
-//   background-color: lightgrey;
-//   width: 320px;
-//   height: 70px;
-//   border-radius: 30px;
-//   font-size: 1.5rem;
-//   font-weight: 600;
-//   background-size: 100% 100%;
-//   box-shadow: 0 0 0 7px lightgrey inset;
-//   margin-bottom: 15px;
-//   margin-top: 15px;
-// }
-// .button:hover {
-//   background-image: linear-gradient(
-//     145deg,
-//     transparent 10%,
-//     darkgrey 10% 20%,
-//     transparent 20% 30%,
-//     darkgrey 30% 40%,
-//     transparent 40% 50%,
-//     darkgrey 50% 60%,
-//     transparent 60% 70%,
-//     darkgrey 70% 80%,
-//     transparent 80% 90%,
-//     darkgrey 90% 100%
-//   );
-//   animation: background 3s linear infinite;
-// }
-
-// @keyframes background {
-//   0% {
-//     background-position: 0 0;
-//   }
-//   100% {
-//     background-position: 400px 0;
-//   }
-// }

@@ -12,7 +12,6 @@ class CreateQuiz extends Component {
             amount: 1,
             difficulty: "easy",
             token: "",
-            showPlay: false,
         }
     }
 
@@ -53,6 +52,7 @@ class CreateQuiz extends Component {
 
     handleClick = (e) => {
         e.preventDefault();
+        this.props.loadingHandler();
         let quiz = {};
         axios({
             url: 'https://opentdb.com/api.php',
@@ -69,29 +69,28 @@ class CreateQuiz extends Component {
         }).then((response) => {
             quiz = response.data.results;
             this.props.callQuiz(quiz);
-            console.log(quiz);
-            this.setState({
-                showPlay: true
-            })
         })
     }
 
 
     render() {
 
-        if (this.state.showPlay === true) {
-            return <Link to={"/play"}>Play Quiz</Link>;
-        }
-
         return (
             <form>
-                <select name="selectedCategory" id="categories" onChange={this.handleChange}>
-                    {this.state.categories.map((obj, id) => {
-                        return (<option key={id} value={obj.id}>{obj.name}</option>)
-                    })}
-                </select>
-                <input type="number" name="amount" min="0" max="20" value={this.state.amount} onChange={this.handleChange}></input>
-                <button onClick={this.handleClick}>Generate Quiz</button>
+                <div>
+                    <label for="selectedCategory">Choose a Category:</label>
+                    <select name="selectedCategory" id="categories" onChange={this.handleChange}>
+                        {this.state.categories.map((obj, id) => {
+                            return (<option key={id} value={obj.id}>{obj.name}</option>)
+                        })}
+                    </select>
+                </div>
+                <div>
+                    <label for="amount">Number of Questions:</label>
+                    <input type="number" name="amount" min="0" max="20" value={this.state.amount} onChange={this.handleChange}></input>
+                    <button onClick={this.handleClick}>Generate Quiz</button>
+                </div>
+
             </form>
         );
     };
