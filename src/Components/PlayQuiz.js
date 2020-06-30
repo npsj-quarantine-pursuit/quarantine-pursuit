@@ -5,28 +5,18 @@ class PlayQuiz extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentQuestion: {
-        question: ' ',
-        incorrect_answers: [],
-      },
+      currentQuestion: this.props.quiz[0],
       questionNumber: 0,
       position: 1,
       score: 0,
       showFinalScore: false,
-
+      question_list: [],
     }
   }
 
-  componentDidMount() {
-    console.log('mounted')
-    let firstQuestion = this.props.quiz[0];
-    this.setState({
-      currentQuestion: firstQuestion,
-    })
-    this.setCorrectPosition();
+  componentDidMount() {    
+    this.combineAndShuffle();
   }
-
-  
 
   handleClick = () => {
     let questionNumber = this.state.questionNumber
@@ -46,6 +36,7 @@ class PlayQuiz extends Component {
         showFinalScore: true
       })
     }
+    this.combineAndShuffle();
   }
 
   correct = () => {
@@ -56,7 +47,6 @@ class PlayQuiz extends Component {
     })
     this.handleClick()
   }
-
 
   setCorrectPosition = () => {
     let correctPosition = Math.floor(Math.random() * 4);
@@ -80,33 +70,42 @@ class PlayQuiz extends Component {
     this.props.reset();
   }
 
-  render() {
-    let incorrectAnswers = this.state.currentQuestion.incorrect_answers;
-    // Because array is only 3 objects long, the || statement prints it if the correct answer is in 4th position
-    let listIncorrectAnswers = incorrectAnswers.map((answer, i) => {
-      if (this.state.position === i || (i === 2 && this.state.position == 3)) {
-        return (
-          <div key={i}>
-            <button onClick={this.correct}>{atob(this.state.currentQuestion.correct_answer)}</button>  
-            <button onClick={this.handleClick}>{atob(answer)}</button>
-          </div>
-        );
-      } else { 
-        return <button key={i} onClick={this.handleClick}>{atob(answer)}</button>
-      }
-    });
-     
+  combineAndShuffle = () => {
+    let array = [...this.state.currentQuestion.incorrect_answers, this.state.currentQuestion.correct_answer];
 
+      const shuffle = (array) => {
+        let i = array.length - 1
+        for ( i; i > 0; i-- ) {
+          const j = Math.floor(Math.random() * i)
+          const temp = array[i]
+          array[i] = array[j]
+          array[j] = temp
+        }
+        this.setState({
+          question_list: array,
+        })
+      
+      }
+
+    shuffle(array);
+  }
+
+  render() {
+     
+    let questions = this.state.question_list;
+
+    let listQuestions = questions.map((answer, i) =>{
+      return <button className="answerButtons" key={i} onClick={this.handleClick}>{atob(answer)}</button>
+    })
 
     return (
       <div>
         {this.state.showFinalScore ? <ShowFinalScore quiz={this.props.quiz} score={this.state.score} reset={this.reset} /> : ( 
           <div>
-            <h2>{atob(this.state.currentQuestion.question)}</h2> {listIncorrectAnswers}
+            <h2>{atob(this.state.currentQuestion.question)}</h2>
           </div>
          )}
-        
-        
+        {listQuestions}
       </div>
     )
   }
