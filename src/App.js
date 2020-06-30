@@ -78,31 +78,33 @@ class App extends Component {
   render() {
     return (
       <Router basename={process.env.PUBLIC_URL}>
-        <div className="app">
           <header>
             <h1 className="sr-only">Qurantine Pursuit</h1>
             <img src={logo} alt="Logo for Qurantine Pursuit" />
           </header>
           <main>
-            {this.state.isLoading ? <LoadingAnimation /> : null}
+            
             <Route exact path="/">
               <button><Link to="/create">Create a Quiz!</Link></button>
               <button><Link to="/select">Select an Existing Quiz!</Link></button>
             </Route>
             <Route path="/create">
+              <div className="loadingHelper">
+              {this.state.isLoading ? <LoadingAnimation /> : null}
               <CreateQuiz callQuiz={this.callQuiz} loadingHandler={this.loadingHandler} loadingFalse={this.loadingFalse}/>
+              </div>
             </Route>
             <Route path="/select">
               <SelectQuiz selectQuiz={this.selectQuiz} />
             </Route>
 
-            {this.state.dataReady ? <Redirect to="/play" /> : null}
+            {/* If quiz has been loaded redirect user to play, otherwise redirect to home (in case they refresh on child component) */}
+            {this.state.dataReady ? <Redirect to="/play" /> : <Redirect to="/"/>}
 
             <Route path="/play">
               <PlayQuiz quiz={this.state.quiz} reset={this.reset} />
             </Route>
           </main>
-        </div>
       </Router >
     )
   }

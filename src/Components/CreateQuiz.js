@@ -84,9 +84,9 @@ class CreateQuiz extends Component {
     render() {
 
         return (
-            <form>
+            <form className="centered">
                 <div className="inputPair">
-                    <label htmlFor="selectedCategory">Choose a Category:</label>
+                    <label htmlFor="selectedCategory" >Choose a Category:</label>
                     <select name="selectedCategory" id="categories" onChange={this.handleChange}>
                         {this.state.categories.map((obj, id) => {
                             return (<option key={id} value={obj.id}>{obj.name}</option>)

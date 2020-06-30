@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ShowFinalScore from "./ShowFinalScore";
+import { BrowserRouter as Redirect } from 'react-router-dom';
 
 class PlayQuiz extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class PlayQuiz extends Component {
       score: 0,
       showFinalScore: false,
       question_list: [],
-      shuffled: false
+      shuffled: false,
+      answerFeedback: ""
     }
   }
 
@@ -36,7 +38,8 @@ class PlayQuiz extends Component {
       this.setState({
         questionNumber,
         currentQuestion: this.props.quiz[questionNumber],
-        shuffled: false
+        shuffled: false,
+        answerFeedback: `The Correct Answer Was: ${atob(this.state.currentQuestion.correct_answer)}`
       })
       //Shows final score screen if we answered last question in arra
     } else {
@@ -56,7 +59,8 @@ class PlayQuiz extends Component {
     let newScore = this.state.score
     newScore++
     this.setState({
-      score: newScore
+      score: newScore,
+      answerFeedback: "Correct!"
     })
   }
 
@@ -95,7 +99,7 @@ class PlayQuiz extends Component {
   }
 
   render() {
-
+    
     let listQuestions = this.state.question_list.map((answer, i) =>{
       return <button className="answerButtons" name={answer} key={i} onClick={this.handleClick}>{atob(answer)}</button>
     })
@@ -103,7 +107,9 @@ class PlayQuiz extends Component {
     return (
       <div>
         {this.state.showFinalScore ? <ShowFinalScore quiz={this.props.quiz} score={this.state.score} reset={this.reset} /> : ( 
-          <div>
+          <div className="centered">
+            {/* CONTROLS CLASSNAME TO ALLOW STYLING DIFFERENCED BETWEEN CORRECT AND INCORRECT */}
+            {this.state.answerFeedback == "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2>: <h2 className="incorrect">{this.state.answerFeedback}</h2>}
             <h2>{atob(this.state.currentQuestion.question)}</h2>
             {listQuestions}
           </div>

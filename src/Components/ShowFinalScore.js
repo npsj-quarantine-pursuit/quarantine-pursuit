@@ -24,12 +24,12 @@ class ShowFinalScore extends Component {
    
     render() {
         return (
-            <div>
-        <h2>Your Score is: {this.props.score}/{this.props.quiz.length}</h2>
-        
-        <Link to="/"><button onClick={this.props.reset}>Home</button></Link>
-        <button onClick={this.save}>Save Quiz</button>
-      </div>
+        <div className="centered">
+            <h2>Your Score is: {this.props.score}/{this.props.quiz.length}</h2>
+            
+            <Link to="/"><button onClick={this.props.reset}>Home</button></Link>
+            <button onClick={this.save}>Save Quiz</button>
+        </div>
     );
 }
     
