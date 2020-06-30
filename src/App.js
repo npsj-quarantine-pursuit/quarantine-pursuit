@@ -69,6 +69,12 @@ class App extends Component {
     })
   }
 
+  loadingFalse = () => {
+    this.setState({
+      isLoading: false,
+    })
+  }
+
   render() {
     return (
       <Router basename={process.env.PUBLIC_URL}>
@@ -84,7 +90,7 @@ class App extends Component {
               <button><Link to="/select">Select an Existing Quiz!</Link></button>
             </Route>
             <Route path="/create">
-              <CreateQuiz callQuiz={this.callQuiz} loadingHandler={this.loadingHandler} />
+              <CreateQuiz callQuiz={this.callQuiz} loadingHandler={this.loadingHandler} loadingFalse={this.loadingFalse}/>
             </Route>
             <Route path="/select">
               <SelectQuiz selectQuiz={this.selectQuiz} />

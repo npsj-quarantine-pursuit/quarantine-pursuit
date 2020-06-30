@@ -7,10 +7,10 @@ class PlayQuiz extends Component {
     this.state = {
       currentQuestion: this.props.quiz[0],
       questionNumber: 0,
-      position: 1,
       score: 0,
       showFinalScore: false,
       question_list: [],
+      shuffled: false
     }
   }
 
@@ -18,25 +18,38 @@ class PlayQuiz extends Component {
     this.combineAndShuffle();
   }
 
-  handleClick = () => {
+  componentDidUpdate() {
+    if (this.state.shuffled === false){
+      this.combineAndShuffle()
+      this.setState({
+        shuffled: true
+      })
+    }
+  }
+
+  handleClick = (e) => {
     let questionNumber = this.state.questionNumber
     questionNumber++;
-    
+    //Sets the currentquestion state to next question in array
     if (questionNumber < this.props.quiz.length ) {
-      this.setCorrectPosition();
       console.log(this.state.currentQuestion);
       this.setState({
         questionNumber,
-        currentQuestion: this.props.quiz[questionNumber]
+        currentQuestion: this.props.quiz[questionNumber],
+        shuffled: false
       })
+      //Shows final score screen if we answered last question in arra
     } else {
-      console.log("end");
-      
       this.setState({
         showFinalScore: true
       })
     }
-    this.combineAndShuffle();
+
+
+    if (this.state.currentQuestion.correct_answer === e.target.name){
+      this.correct();
+      console.log('ding')
+    }
   }
 
   correct = () => {
@@ -45,25 +58,16 @@ class PlayQuiz extends Component {
     this.setState({
       score: newScore
     })
-    this.handleClick()
-  }
-
-  setCorrectPosition = () => {
-    let correctPosition = Math.floor(Math.random() * 4);
-    this.setState({ 
-      position: correctPosition
-    })
   }
 
   reset = () => {
     this.setState({
-      currentQuestion: {
-        correctAnswer: '',
-        question: '',
-        incorrect_answers: [],
-      },
+      // currentQuestion: {
+      //   correctAnswer: '',
+      //   question: '',
+      //   incorrect_answers: [],
+      // },
       questionNumber: 0,
-      position: 1,
       score: 0,
       showFinalScore: false,
     })
@@ -91,11 +95,9 @@ class PlayQuiz extends Component {
   }
 
   render() {
-     
-    let questions = this.state.question_list;
 
-    let listQuestions = questions.map((answer, i) =>{
-      return <button className="answerButtons" key={i} onClick={this.handleClick}>{atob(answer)}</button>
+    let listQuestions = this.state.question_list.map((answer, i) =>{
+      return <button className="answerButtons" name={answer} key={i} onClick={this.handleClick}>{atob(answer)}</button>
     })
 
     return (
@@ -103,9 +105,10 @@ class PlayQuiz extends Component {
         {this.state.showFinalScore ? <ShowFinalScore quiz={this.props.quiz} score={this.state.score} reset={this.reset} /> : ( 
           <div>
             <h2>{atob(this.state.currentQuestion.question)}</h2>
+            {listQuestions}
           </div>
-         )}
-        {listQuestions}
+        )}
+        
       </div>
     )
   }

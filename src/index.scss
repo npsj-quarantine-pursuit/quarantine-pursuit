@@ -62,6 +62,13 @@ button {
   margin: 50px;
 }
 
+.inputPair {
+  @include center;
+  justify-content: space-evenly;
+  color: black;
+  font-size: 1.3rem;
+}
+
 // LoadingAnimation.js
 .loading-container {
   font-size: 80px;

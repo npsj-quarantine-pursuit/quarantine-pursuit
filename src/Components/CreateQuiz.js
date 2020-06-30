@@ -27,6 +27,8 @@ class CreateQuiz extends Component {
                 categories,
                 isLoading: false,
             })
+        }).catch(() => {
+            alert("I can't seem to connect to my database :'(, please come back later... I'll do better I swear")
         })
 
         axios({
@@ -67,8 +69,14 @@ class CreateQuiz extends Component {
                 encode: 'base64'
             }
         }).then((response) => {
-            quiz = response.data.results;
-            this.props.callQuiz(quiz);
+            console.log(response)
+            if (response.data.response_code > 0){
+                alert("I'm sorry, there aren't enough questions available in that category. Try again with a lower number of questions or change categories. ")
+                this.props.loadingFalse();
+            }else {
+                quiz = response.data.results;
+                this.props.callQuiz(quiz);
+            }
         })
     }
 
@@ -77,20 +85,20 @@ class CreateQuiz extends Component {
 
         return (
             <form>
-                <div>
-                    <label for="selectedCategory">Choose a Category:</label>
+                <div className="inputPair">
+                    <label htmlFor="selectedCategory">Choose a Category:</label>
                     <select name="selectedCategory" id="categories" onChange={this.handleChange}>
                         {this.state.categories.map((obj, id) => {
                             return (<option key={id} value={obj.id}>{obj.name}</option>)
                         })}
                     </select>
                 </div>
-                <div>
-                    <label for="amount">Number of Questions:</label>
-                    <input type="number" name="amount" min="0" max="20" value={this.state.amount} onChange={this.handleChange}></input>
-                    <button onClick={this.handleClick}>Generate Quiz</button>
+                <div className="inputPair">
+                    <label htmlFor="amount">Number of Questions:</label>
+                    <p>{this.state.amount}</p>
+                    <input type="range" name="amount" min="1" max="20" value={this.state.amount} onChange={this.handleChange}></input>
                 </div>
-
+                <button onClick={this.handleClick}>Generate Quiz</button>
             </form>
         );
     };
