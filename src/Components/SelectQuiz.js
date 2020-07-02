@@ -11,8 +11,10 @@ class SelectQuiz extends Component {
             }
         }
     }
+    
 
     componentDidMount() {
+        this.props.loadingHandler()
         const dbRef = firebase.database().ref();
         
         dbRef.once('value', (response) => {
@@ -25,11 +27,14 @@ class SelectQuiz extends Component {
                 quizList,
                 quizInfo: data,
             })
+        }).then(()=> {
+            this.props.loadingFalse();
         })
     }
 
-    handleClick = (e) => {
-        this.props.selectQuiz(e.target.name);
+    handleClick = (quiz) => {
+        this.props.selectQuiz(quiz);
+        console.log(quiz);
     }
 
     render() {
@@ -38,12 +43,9 @@ class SelectQuiz extends Component {
         <div>
             {
             this.state.quizList.map((quiz) => {
-                console.log('mapping')
                 return (
                     <div className="centered selectQuiz" key={quiz}>
-                        {console.log(quiz)}
-
-                        <button name={quiz} onClick={this.handleClick}>
+                        <button name={quiz} onClick={this.handleClick(quiz)}>
 
                             <h3>{quiz}</h3>
 

@@ -41,6 +41,7 @@ class App extends Component {
       this.setState({
         quiz,
       })
+      console.log('ding');
     }).then(() => {
       this.setState({
         dataReady: true,
@@ -60,7 +61,6 @@ class App extends Component {
       }],
       dataReady: false,
     })
-    console.log('reset');
   }
 
   loadingHandler = () => {
@@ -97,7 +97,7 @@ class App extends Component {
           </Route>
 
           <Route path="/select">
-            <SelectQuiz selectQuiz={this.selectQuiz} />
+            <SelectQuiz selectQuiz={this.selectQuiz} loadingHandler={this.loadingHandler} loadingFalse={this.loadingFalse}/>
           </Route>
 
           {/* If quiz has been loaded redirect user to play, otherwise redirect to home (in case they refresh on child component) */}

@@ -5,7 +5,7 @@ class PlayQuiz extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentQuestion: this.props.quiz[0],
+      currentQuestion: {},
       questionNumber: 0,
       score: 0,
       showFinalScore: false,
@@ -19,7 +19,9 @@ class PlayQuiz extends Component {
   componentDidMount() {    
     this.combineAndShuffle();
     setInterval(this.countdown, 1000)
-    
+    this.setState({
+      currentQuestion: this.props.quiz[0],
+    })
   }
 
   componentDidUpdate() {
@@ -53,7 +55,6 @@ class PlayQuiz extends Component {
         showFinalScore: true
       })
     }
-    console.log(this.state.answerFeedback);
   }
 
   handleClick = (e) => {
@@ -116,11 +117,13 @@ class PlayQuiz extends Component {
       return <button className="answerButtons" name={answer} key={i} onClick={this.handleClick}>{atob(answer)}</button>
     })
 
+    let showFeedback = this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2> : <h2 className="incorrect">{this.state.answerFeedback}</h2>
+
     return (
       <div>
         {this.state.showFinalScore ? ( 
           <div>
-            {this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2> : <h2 className="incorrect">{this.state.answerFeedback}</h2>}
+            {showFeedback}
             <ShowFinalScore quiz={this.props.quiz} score={this.state.score} reset={this.reset} />
             {console.log(this.state.answerFeedback)}
           </div>
@@ -128,7 +131,7 @@ class PlayQuiz extends Component {
          : ( 
           <div className="centered">
             {/* CONTROLS CLASSNAME TO ALLOW STYLING DIFFERENCED BETWEEN CORRECT AND INCORRECT */}
-            {this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2>: <h2 className="incorrect">{this.state.answerFeedback}</h2>}
+            {showFeedback}
             <p>{this.state.timer}</p>
             <h2>{atob(this.state.currentQuestion.question)}</h2>
             {listQuestions}
