@@ -6,6 +6,9 @@ class SelectQuiz extends Component {
         super();
         this.state = {
             quizList: [],
+            quizInfo: {
+
+            }
         }
     }
 
@@ -15,9 +18,12 @@ class SelectQuiz extends Component {
         dbRef.once('value', (response) => {
             
             const data = response.val();
+            console.log(data)
             const quizList = Object.keys(data);
+
             this.setState({
                 quizList,
+                quizInfo: data,
             })
         })
     }
@@ -27,17 +33,29 @@ class SelectQuiz extends Component {
     }
 
     render() {
+        
     return (
         <div>
-            {this.state.quizList.map((quiz) => {
+            {
+            this.state.quizList.map((quiz) => {
+                console.log('mapping')
                 return (
-                    <div key={quiz}>
-                    {/* <Link to="/x"> */}
-                        <button name={quiz} onClick={this.handleClick}>{quiz}</button>
-                    {/* </Link> */}
+                    <div className="centered selectQuiz" key={quiz}>
+                        {console.log(quiz)}
+
+                        <button name={quiz} onClick={this.handleClick}>
+
+                            <h3>{quiz}</h3>
+
+                            <p>Category: {atob(this.state.quizInfo[quiz][0].category)}</p>
+                            <p>{this.state.quizInfo[quiz].length} Questions</p>
+                            <p>Difficulty: {atob(this.state.quizInfo[quiz][0].difficulty)}</p>
+
+                        </button>
                     </div>
-                )
-            })}
+                    )
+                })
+            }
         </div>
     );
     }
