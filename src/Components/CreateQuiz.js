@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class CreateQuiz extends Component {
     constructor() {
@@ -97,6 +96,14 @@ class CreateQuiz extends Component {
                     <label htmlFor="amount">Number of Questions:</label>
                     <p>{this.state.amount}</p>
                     <input type="range" name="amount" min="1" max="20" value={this.state.amount} onChange={this.handleChange}></input>
+                </div>
+                <div className="inputPair">
+                    <label htmlFor="difficulty" >Choose a Difficulty:</label>
+                    <select name="difficulty" id="difficulty" onChange={this.handleChange}>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
                 </div>
                 <button onClick={this.handleClick}>Generate Quiz</button>
             </form>

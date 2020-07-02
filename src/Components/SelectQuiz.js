@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import firebase from './firebase';
-
-
 
 class SelectQuiz extends Component {
     constructor() {

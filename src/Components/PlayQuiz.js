@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ShowFinalScore from "./ShowFinalScore";
-import { BrowserRouter as Redirect } from 'react-router-dom';
 
 class PlayQuiz extends Component {
   constructor(props) {
@@ -109,7 +108,7 @@ class PlayQuiz extends Component {
         {this.state.showFinalScore ? <ShowFinalScore quiz={this.props.quiz} score={this.state.score} reset={this.reset} /> : ( 
           <div className="centered">
             {/* CONTROLS CLASSNAME TO ALLOW STYLING DIFFERENCED BETWEEN CORRECT AND INCORRECT */}
-            {this.state.answerFeedback == "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2>: <h2 className="incorrect">{this.state.answerFeedback}</h2>}
+            {this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2>: <h2 className="incorrect">{this.state.answerFeedback}</h2>}
             <h2>{atob(this.state.currentQuestion.question)}</h2>
             {listQuestions}
           </div>
