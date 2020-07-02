@@ -35,9 +35,9 @@ class SelectQuiz extends Component {
                         <div className="centered selectQuiz" key={quiz}>
                             <button name={quiz} onClick={this.handleClick}>
                                 <h3>{quiz}</h3>
-                                <p>Category: {atob(this.state.quizInfo[quiz][0].category)}</p>
+                                <p>Category: {decodeURIComponent(this.state.quizInfo[quiz][0].category)}</p>
                                 <p>{this.state.quizInfo[quiz].length} Questions</p>
-                                <p>Difficulty: {atob(this.state.quizInfo[quiz][0].difficulty)}</p>
+                                <p>Difficulty: {decodeURIComponent(this.state.quizInfo[quiz][0].difficulty)}</p>
                             </button>
                         </div>
                     )
