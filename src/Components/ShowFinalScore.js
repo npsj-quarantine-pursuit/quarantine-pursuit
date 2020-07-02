@@ -1,39 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Link } from 'react-router-dom';
 import firebase from './firebase';
 
-class ShowFinalScore extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            quizName: "",
-        }
-    }
-
-    save = () => {
-        let quizName = prompt("What would you like to name this quiz");
-
-        this.setState({
-            quizName,
-        })
-
+function ShowFinalScore(props) {
+    const save = function () {
+        let quizName = prompt("What would you like to name this quiz?");
         const dbRef = firebase.database().ref();
-        dbRef.child(quizName).set(this.props.quiz);
+        dbRef.child(quizName).set(props.quiz);
     }
 
-   
-    render() {
-        return (
+    return (
         <div className="centered">
-            
-            <h2>Your Score is: {this.props.score}/{this.props.quiz.length}</h2>
-            
-            <Link to="/"><button onClick={this.props.reset}>Home</button></Link>
-            <button onClick={this.save}>Save Quiz</button>
+            <h2>Your Score is: {props.score}/{props.quiz.length}</h2>
+            <Link to="/"><button onClick={props.reset}>Home</button></Link>
+            <button onClick={save}>Save Quiz</button>
         </div>
     );
-}
-    
 }
 
 export default ShowFinalScore;          

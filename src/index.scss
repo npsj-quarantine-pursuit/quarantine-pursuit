@@ -16,6 +16,7 @@ $primaryColor: #FFF;
 $secondaryColor: #AFEDFF;
 $tertiaryColor: #FFB0C6;
 $quaternaryColor: #9BD694;
+$quinaryColor: #000;
 
 $primaryFont: 'Barlow', sans-serif;
 $secondaryFont: 'Merienda', cursive;
@@ -48,12 +49,10 @@ body {
 header {
   @include center;
   height: 20vh;
-}
-
-header img {
-  // width: 50%;
-  margin-top:5vh;
-  max-height: 20vh;
+    img {
+    margin-top: 5vh;
+    max-height: 20vh;
+  }
 }
 
 main {
@@ -66,30 +65,30 @@ button {
 }
 
 .question {
-  color: black;
+  color: $quinaryColor;
 }
 
 h3 {
   font-family: $secondaryFont;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $quinaryColor;
   display: inline-block;
   margin-bottom: 5px;
 }
 
 .selectQuiz p {
-  color: #FFF;
+  color: $primaryColor;
   font-size: 20px;
 }
 
 .answerButtons {
-  color: #fff;
+  color: $primaryColor;
 }
 
 .inputPair {
   @include center;
   justify-content: space-evenly;
-  color: black;
-  font-size: 1.3rem;
+  color: $quinaryColor;
+  font-size: 20px;
 }
 
 .correct,
@@ -98,6 +97,7 @@ h3 {
   display: inline-block;
   padding: 0 5px;
 }
+
 .correct {
   background-color: $quaternaryColor;
 }
@@ -106,7 +106,7 @@ h3 {
   background-color: #FF2800
 }
 
-.centered{
+.centered {
   @include center;
   flex-direction: column;
   max-width: 100vw;
@@ -120,7 +120,7 @@ h3 {
 .timerYellow,
 .timerRed {
   padding: 7px;
-  color: black;
+  color: $quinaryColor;
 }
 
 .timerGreen {
@@ -138,10 +138,8 @@ h3 {
   background: #FEB0C6;
 }
 
-// LoadingAnimation.js
 .loading-container {
   font-size: 80px;
-  // margin: 120px auto 200px;
   margin: 150px auto 1000px;
   svg {
     animation: spin 2s linear infinite;
@@ -169,51 +167,53 @@ select {
 }
 
 label {
- font-family: $secondaryFont ;
+ font-family: $secondaryFont;
 }
 
 
 /* BUTTON STYLING IDEA TAKEN FROM  https://codepen.io/fossheim/pen/RwPeVKG*/
 button {
-      display: block;
-      cursor: pointer;
-      outline: none;
-      border: none;
-      background-color: $tertiaryColor;
-      width: 400px;
-      min-height: 70px;
-      border-radius: 30px;
-      font-size: 1.5rem;
-      font-weight: 600;
-      background-size: 100% 100%;
-      box-shadow: 0 0 0 7px $tertiaryColor  inset;
-      margin-bottom: 15px;
-      margin-top: 15px;
-    }
-    button:hover {
-      background-image: linear-gradient(
-        145deg,
-        transparent 10%,
-        $quaternaryColor 10% 20%,
-        transparent 20% 30%,
-        $quaternaryColor 30% 40%,
-        transparent 40% 50%,
-        $quaternaryColor  50% 60%,
-        transparent 60% 70%,
-        $quaternaryColor  70% 80%,
-        transparent 80% 90%,
-        $quaternaryColor 90% 100%
-      );
-      animation: background 3s linear infinite;
-    }
-    @keyframes background {
-      0% {
-        background-position: 0 0;
-      }
-      100% {
-        background-position: 400px 0;
-      }
-    }
+  display: block;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: $tertiaryColor;
+  width: 400px;
+  min-height: 70px;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background-size: 100% 100%;
+  box-shadow: 0 0 0 7px $tertiaryColor  inset;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+button:hover {
+  background-image: linear-gradient(
+  145deg,
+  transparent 10%,
+  $quaternaryColor 10% 20%,
+  transparent 20% 30%,
+  $quaternaryColor 30% 40%,
+  transparent 40% 50%,
+  $quaternaryColor  50% 60%,
+  transparent 60% 70%,
+  $quaternaryColor  70% 80%,
+  transparent 80% 90%,
+  $quaternaryColor 90% 100%
+);
+  animation: background 3s linear infinite;
+}
+
+@keyframes background {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
 
 .loadingHelper {
   @include center; 
@@ -222,22 +222,22 @@ button {
 
 
 @media(max-width: 720px){
-
-
   header img {
     width: 80%
   }
+
   main {
     flex-direction: column
   }
 
-  .inputPair{
+  .inputPair {
     flex-direction: column;
     margin: 20px 0;
-  }
-  .inputPair p {
+    p {
     margin: 0;
+    }
   }
+
   label {
     display: inline-block;
     margin-bottom: 5px;

@@ -14,8 +14,8 @@ class CreateQuiz extends Component {
         }
     }
 
+    // Fetching categories and a session token
     componentDidMount() {
-
         axios({
             url: 'https://opentdb.com/api_category.php',
             method: 'GET',
@@ -27,7 +27,7 @@ class CreateQuiz extends Component {
                 isLoading: false,
             })
         }).catch(() => {
-            alert("I can't seem to connect to my database :'(, please come back later... I'll do better I swear")
+            alert("I can't seem to connect to my database :'(. Please come back later... I'll do better I swear")
         })
 
         axios({
@@ -36,11 +36,9 @@ class CreateQuiz extends Component {
             responseType: 'JSON',
         }).then((response) => {
             let token = response.data.token;
-
             this.setState({
                 token,
             })
-            console.log(this.state.token);
         })
     }
 
@@ -51,6 +49,7 @@ class CreateQuiz extends Component {
         })
     }
 
+    // This sends the API request with the user selected values and stores that in state
     handleClick = (e) => {
         e.preventDefault();
         this.props.loadingHandler();
@@ -68,11 +67,10 @@ class CreateQuiz extends Component {
                 encode: 'base64'
             }
         }).then((response) => {
-            console.log(response)
-            if (response.data.response_code > 0){
+            if (response.data.response_code > 0) {
                 alert("I'm sorry, there aren't enough questions available in that category. Try again with a lower number of questions or change categories. ")
                 this.props.loadingFalse();
-            }else {
+            } else {
                 quiz = response.data.results;
                 this.props.callQuiz(quiz);
             }

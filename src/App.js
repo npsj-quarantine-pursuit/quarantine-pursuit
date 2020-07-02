@@ -14,7 +14,6 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      activeQuizPath: "",
       quiz: [{
         question: '',
         correctAnswer: '',
@@ -25,6 +24,7 @@ class App extends Component {
     }
   }
 
+  // Get quiz data from CreateQuiz component then once dataReady is true redirects to PlayQuiz component
   callQuiz = (quiz) => {
     this.setState({
       quiz,
@@ -34,6 +34,7 @@ class App extends Component {
     console.log(this.state.quiz);
   }
 
+  // Get quiz data from SelectQuiz component then once dataReady is true redirects to PlayQuiz component
   selectQuiz = (quiz) => {
     const dbRef = firebase.database().ref(quiz);
     dbRef.once("value", (response) => {
@@ -47,12 +48,11 @@ class App extends Component {
         isLoading: false,
       })
     })
-
   }
 
+  // Reset is called after users finish a quiz
   reset = () => {
     this.setState({
-      activeQuizPath: "",
       quiz: [{
         question: '',
         correctAnswer: '',
@@ -60,15 +60,15 @@ class App extends Component {
       }],
       dataReady: false,
     })
-    console.log('reset');
   }
 
+  // renders loading logo 
   loadingHandler = () => {
     this.setState({
       isLoading: true,
     })
   }
-
+  // removes loading logo
   loadingFalse = () => {
     this.setState({
       isLoading: false,
@@ -83,7 +83,7 @@ class App extends Component {
           <img src={logo} alt="Logo for Qurantine Pursuit" />
         </header>
         <main>
-          
+
           <Route exact path="/">
             <button><Link to="/create">Create a Quiz!</Link></button>
             <button><Link to="/select">Select an Existing Quiz!</Link></button>
@@ -91,8 +91,8 @@ class App extends Component {
 
           <Route path="/create">
             <div className="loadingHelper">
-            {this.state.isLoading ? <LoadingAnimation /> : null}
-            <CreateQuiz callQuiz={this.callQuiz} loadingHandler={this.loadingHandler} loadingFalse={this.loadingFalse}/>
+              {this.state.isLoading ? <LoadingAnimation /> : null}
+              <CreateQuiz callQuiz={this.callQuiz} loadingHandler={this.loadingHandler} loadingFalse={this.loadingFalse} />
             </div>
           </Route>
 
@@ -101,7 +101,7 @@ class App extends Component {
           </Route>
 
           {/* If quiz has been loaded redirect user to play, otherwise redirect to home (in case they refresh on child component) */}
-          {this.state.dataReady ? <Redirect to="/play" /> : <Redirect to="/"/>}
+          {this.state.dataReady ? <Redirect to="/play" /> : <Redirect to="/" />}
 
           <Route path="/play">
             <PlayQuiz quiz={this.state.quiz} reset={this.reset} />
@@ -112,4 +112,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default App;

@@ -19,9 +19,9 @@ class PlayQuiz extends Component {
   componentDidMount() {
     this.combineAndShuffle();
     setInterval(this.countdown, 1000)
-
   }
 
+  // Shuffles answers everytime component updates(to mix in correct answer)
   componentDidUpdate() {
     if (this.state.shuffled === false) {
       this.combineAndShuffle();
@@ -44,11 +44,11 @@ class PlayQuiz extends Component {
     questionNumber++;
     //Sets the currentQuestion state to next question in array
     if (questionNumber < this.props.quiz.length) {
-      console.log(this.state.currentQuestion);
       this.setState({
         questionNumber,
         currentQuestion: this.props.quiz[questionNumber],
         shuffled: false,
+        // atob is decoding from base64
         answerFeedback: `The Correct Answer Was: ${atob(this.state.currentQuestion.correct_answer)}`
       })
       //Shows final score screen if we answered last question in arra
@@ -57,7 +57,6 @@ class PlayQuiz extends Component {
         showFinalScore: true
       })
     }
-    console.log(this.state.answerFeedback);
   }
 
   handleClick = (e) => {
@@ -93,9 +92,9 @@ class PlayQuiz extends Component {
   }
 
   combineAndShuffle = () => {
-
+    //creates a new array with all answers - both correct and incorrect answers
     let array = [...this.state.currentQuestion.incorrect_answers, this.state.currentQuestion.correct_answer];
-
+    // uses Fisher Yates shuffle to randomize
     const shuffle = (array) => {
       let i = array.length - 1
       for (i; i > 0; i--) {
@@ -108,18 +107,16 @@ class PlayQuiz extends Component {
         question_list: array,
         timer: 30
       })
-
     }
-
     shuffle(array);
   }
 
   render() {
-
     let listQuestions = this.state.question_list.map((answer, i) => {
       return <button className="answerButtons" name={answer} key={i} onClick={this.handleClick}>{atob(answer)}</button>
     })
 
+    // Changes timer background color
     let timer = () => {
       if (this.state.timer >= 20) {
         return <p className="timerGreen">{this.state.timer}</p>
@@ -130,29 +127,28 @@ class PlayQuiz extends Component {
       }
     }
 
+    const { showFinalScore, answerFeedback, score, currentQuestion } = this.state;
 
     return (
       <div>
-        {this.state.showFinalScore ? (
+        {showFinalScore ? (
           <div>
-            {this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2> : <h2 className="incorrect">{this.state.answerFeedback}</h2>}
-            <ShowFinalScore quiz={this.props.quiz} score={this.state.score} reset={this.reset} />
-            {console.log(this.state.answerFeedback)}
+            {answerFeedback === "Correct!" ? <h2 className="correct">{answerFeedback}</h2> : <h2 className="incorrect">{answerFeedback}</h2>}
+            <ShowFinalScore quiz={this.props.quiz} score={score} reset={this.reset} />
           </div>
         )
           : (
             <div className="centered">
               {/* CONTROLS CLASSNAME TO ALLOW STYLING DIFFERENCED BETWEEN CORRECT AND INCORRECT */}
-              {this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2> : <h2 className="incorrect">{this.state.answerFeedback}</h2>}
+              {answerFeedback === "Correct!" ? <h2 className="correct">{answerFeedback}</h2> : <h2 className="incorrect">{answerFeedback}</h2>}
               {timer()}
-              <h2 className="question">{atob(this.state.currentQuestion.question)}</h2>
+              <h2 className="question">{atob(currentQuestion.question)}</h2>
               {listQuestions}
             </div>
           )}
-
       </div>
     )
   }
 }
 
-export default PlayQuiz
+export default PlayQuiz;
