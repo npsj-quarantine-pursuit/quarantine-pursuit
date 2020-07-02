@@ -48,8 +48,8 @@ class PlayQuiz extends Component {
         questionNumber,
         currentQuestion: this.props.quiz[questionNumber],
         shuffled: false,
-        // atob is decoding from base64
-        answerFeedback: `The Correct Answer Was: ${atob(this.state.currentQuestion.correct_answer)}`
+        // decodeURIComponent is decoding from base64
+        answerFeedback: `The Correct Answer Was: ${decodeURIComponent(this.state.currentQuestion.correct_answer)}`
       })
       //Shows final score screen if we answered last question in arra
     } else {
@@ -113,7 +113,7 @@ class PlayQuiz extends Component {
 
   render() {
     let listQuestions = this.state.question_list.map((answer, i) => {
-      return <button className="answerButtons" name={answer} key={i} onClick={this.handleClick}>{atob(answer)}</button>
+      return <button className="answerButtons" name={answer} key={i} onClick={this.handleClick}>{decodeURIComponent(answer)}</button>
     })
 
     // Changes timer background color
@@ -142,7 +142,7 @@ class PlayQuiz extends Component {
               {/* CONTROLS CLASSNAME TO ALLOW STYLING DIFFERENCED BETWEEN CORRECT AND INCORRECT */}
               {answerFeedback === "Correct!" ? <h2 className="correct">{answerFeedback}</h2> : <h2 className="incorrect">{answerFeedback}</h2>}
               {timer()}
-              <h2 className="question">{atob(currentQuestion.question)}</h2>
+              <h2 className="question">{decodeURIComponent(currentQuestion.question)}</h2>
               {listQuestions}
             </div>
           )}

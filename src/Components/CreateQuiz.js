@@ -64,7 +64,7 @@ class CreateQuiz extends Component {
                 difficulty: this.state.difficulty,
                 token: this.state.token,
                 type: "multiple",
-                encode: 'base64'
+                encode: 'url3986'
             }
         }).then((response) => {
             if (response.data.response_code > 0) {
