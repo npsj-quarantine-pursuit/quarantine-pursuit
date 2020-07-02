@@ -14,9 +14,9 @@ class SelectQuiz extends Component {
 
     componentDidMount() {
         const dbRef = firebase.database().ref();
-        
+
         dbRef.once('value', (response) => {
-            
+
             const data = response.val();
             console.log(data)
             const quizList = Object.keys(data);
@@ -29,35 +29,35 @@ class SelectQuiz extends Component {
     }
 
     handleClick = (e) => {
-        this.props.selectQuiz(e.target.name);
+        this.props.selectQuiz(e.currentTarget.name);
     }
 
     render() {
-        
-    return (
-        <div>
-            {
-            this.state.quizList.map((quiz) => {
-                console.log('mapping')
-                return (
-                    <div className="centered selectQuiz" key={quiz}>
-                        {console.log(quiz)}
 
-                        <button name={quiz} onClick={this.handleClick}>
+        return (
+            <div>
+                {
+                    this.state.quizList.map((quiz) => {
+                        console.log('mapping')
+                        return (
+                            <div className="centered selectQuiz" key={quiz}>
+                                {console.log(quiz)}
 
-                            <h3>{quiz}</h3>
+                                <button name={quiz} onClick={this.handleClick}>
 
-                            <p>Category: {atob(this.state.quizInfo[quiz][0].category)}</p>
-                            <p>{this.state.quizInfo[quiz].length} Questions</p>
-                            <p>Difficulty: {atob(this.state.quizInfo[quiz][0].difficulty)}</p>
+                                    <h3>{quiz}</h3>
 
-                        </button>
-                    </div>
-                    )
-                })
-            }
-        </div>
-    );
+                                    <p>Category: {atob(this.state.quizInfo[quiz][0].category)}</p>
+                                    <p>{this.state.quizInfo[quiz].length} Questions</p>
+                                    <p>Difficulty: {atob(this.state.quizInfo[quiz][0].difficulty)}</p>
+
+                                </button>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        );
     }
 }
 

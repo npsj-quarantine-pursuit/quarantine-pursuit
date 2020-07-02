@@ -16,22 +16,26 @@ class PlayQuiz extends Component {
     }
   }
 
-  componentDidMount() {    
+  componentDidMount() {
     this.combineAndShuffle();
     setInterval(this.countdown, 1000)
-    
+
   }
 
   componentDidUpdate() {
-    if (this.state.shuffled === false){
+    if (this.state.shuffled === false) {
       this.combineAndShuffle();
       this.setState({
         shuffled: true
       })
     }
-    
+
     if (this.state.timer === 0) {
       this.nextQuestion();
+      // Prevents infinite loop on last page 
+      this.setState({
+        timer: 30,
+      })
     }
   }
 
@@ -39,7 +43,7 @@ class PlayQuiz extends Component {
     let questionNumber = this.state.questionNumber
     questionNumber++;
     //Sets the currentQuestion state to next question in array
-    if (questionNumber < this.props.quiz.length ) {
+    if (questionNumber < this.props.quiz.length) {
       console.log(this.state.currentQuestion);
       this.setState({
         questionNumber,
@@ -58,7 +62,7 @@ class PlayQuiz extends Component {
 
   handleClick = (e) => {
     this.nextQuestion();
-    if (this.state.currentQuestion.correct_answer === e.target.name){
+    if (this.state.currentQuestion.correct_answer === e.target.name) {
       this.correct();
     }
   }
@@ -92,49 +96,60 @@ class PlayQuiz extends Component {
 
     let array = [...this.state.currentQuestion.incorrect_answers, this.state.currentQuestion.correct_answer];
 
-      const shuffle = (array) => {
-        let i = array.length - 1
-        for ( i; i > 0; i-- ) {
-          const j = Math.floor(Math.random() * i)
-          const temp = array[i]
-          array[i] = array[j]
-          array[j] = temp
-        }
-        this.setState({
-          question_list: array,
-          timer: 30
-        })
-      
+    const shuffle = (array) => {
+      let i = array.length - 1
+      for (i; i > 0; i--) {
+        const j = Math.floor(Math.random() * i)
+        const temp = array[i]
+        array[i] = array[j]
+        array[j] = temp
       }
+      this.setState({
+        question_list: array,
+        timer: 30
+      })
+
+    }
 
     shuffle(array);
   }
 
   render() {
-    
-    let listQuestions = this.state.question_list.map((answer, i) =>{
+
+    let listQuestions = this.state.question_list.map((answer, i) => {
       return <button className="answerButtons" name={answer} key={i} onClick={this.handleClick}>{atob(answer)}</button>
     })
 
+    let timer = () => {
+      if (this.state.timer >= 20) {
+        return <p className="timerGreen">{this.state.timer}</p>
+      } else if (this.state.timer <= 20 && this.state.timer >= 10) {
+        return <p className="timerYellow">{this.state.timer}</p>
+      } else {
+        return <p className="timerRed">{this.state.timer}</p>
+      }
+    }
+
+
     return (
       <div>
-        {this.state.showFinalScore ? ( 
+        {this.state.showFinalScore ? (
           <div>
             {this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2> : <h2 className="incorrect">{this.state.answerFeedback}</h2>}
             <ShowFinalScore quiz={this.props.quiz} score={this.state.score} reset={this.reset} />
             {console.log(this.state.answerFeedback)}
           </div>
         )
-         : ( 
-          <div className="centered">
-            {/* CONTROLS CLASSNAME TO ALLOW STYLING DIFFERENCED BETWEEN CORRECT AND INCORRECT */}
-            {this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2>: <h2 className="incorrect">{this.state.answerFeedback}</h2>}
-            <p>{this.state.timer}</p>
-            <h2>{atob(this.state.currentQuestion.question)}</h2>
-            {listQuestions}
-          </div>
-        )}
-        
+          : (
+            <div className="centered">
+              {/* CONTROLS CLASSNAME TO ALLOW STYLING DIFFERENCED BETWEEN CORRECT AND INCORRECT */}
+              {this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2> : <h2 className="incorrect">{this.state.answerFeedback}</h2>}
+              {timer()}
+              <h2 className="question">{atob(this.state.currentQuestion.question)}</h2>
+              {listQuestions}
+            </div>
+          )}
+
       </div>
     )
   }

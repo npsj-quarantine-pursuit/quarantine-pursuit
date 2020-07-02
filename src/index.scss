@@ -65,6 +65,10 @@ button {
   margin: 50px;
 }
 
+.question {
+  color: black;
+}
+
 h3 {
   font-family: $secondaryFont;
   border-bottom: 1px solid black;
@@ -72,9 +76,13 @@ h3 {
   margin-bottom: 5px;
 }
 
-p {
+.selectQuiz p {
   color: #FFF;
   font-size: 20px;
+}
+
+.answerButtons {
+  color: #fff;
 }
 
 .inputPair {
@@ -106,6 +114,28 @@ p {
 
 .selectQuiz {
   margin-top: 40px;
+}
+
+.timerGreen,
+.timerYellow,
+.timerRed {
+  padding: 7px;
+  color: black;
+}
+
+.timerGreen {
+  border: 5px solid #5FFD6B;
+  background: #9BD694;
+}
+
+.timerYellow {
+  border: 5px solid #EADE55 ;
+  background: #FFF39B;
+}
+
+.timerRed {
+  border: 5px solid #FD5F96;
+  background: #FEB0C6;
 }
 
 // LoadingAnimation.js
