@@ -95,7 +95,7 @@ class CreateQuiz extends Component {
                 <div className="inputPair">
                     <label htmlFor="amount">Number of Questions:</label>
                     <p>{this.state.amount}</p>
-                    <input type="range" name="amount" min="1" max="20" value={this.state.amount} onChange={this.handleChange}></input>
+                    <input type="range" name="amount" min="2" max="20" value={this.state.amount} onChange={this.handleChange}></input>
                 </div>
                 <div className="inputPair">
                     <label htmlFor="difficulty" >Choose a Difficulty:</label>

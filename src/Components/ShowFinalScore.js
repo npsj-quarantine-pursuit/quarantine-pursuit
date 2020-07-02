@@ -25,6 +25,7 @@ class ShowFinalScore extends Component {
     render() {
         return (
         <div className="centered">
+            
             <h2>Your Score is: {this.props.score}/{this.props.quiz.length}</h2>
             
             <Link to="/"><button onClick={this.props.reset}>Home</button></Link>

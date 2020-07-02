@@ -53,6 +53,7 @@ class PlayQuiz extends Component {
         showFinalScore: true
       })
     }
+    console.log(this.state.answerFeedback);
   }
 
   handleClick = (e) => {
@@ -117,7 +118,14 @@ class PlayQuiz extends Component {
 
     return (
       <div>
-        {this.state.showFinalScore ? <ShowFinalScore quiz={this.props.quiz} score={this.state.score} reset={this.reset} /> : ( 
+        {this.state.showFinalScore ? ( 
+          <div>
+            {this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2> : <h2 className="incorrect">{this.state.answerFeedback}</h2>}
+            <ShowFinalScore quiz={this.props.quiz} score={this.state.score} reset={this.reset} />
+            {console.log(this.state.answerFeedback)}
+          </div>
+        )
+         : ( 
           <div className="centered">
             {/* CONTROLS CLASSNAME TO ALLOW STYLING DIFFERENCED BETWEEN CORRECT AND INCORRECT */}
             {this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2>: <h2 className="incorrect">{this.state.answerFeedback}</h2>}
