@@ -11,27 +11,34 @@ class PlayQuiz extends Component {
       showFinalScore: false,
       question_list: [],
       shuffled: false,
-      answerFeedback: ""
+      answerFeedback: "",
+      timer: 30
     }
   }
 
   componentDidMount() {    
     this.combineAndShuffle();
+    setInterval(this.countdown, 1000)
+    
   }
 
   componentDidUpdate() {
     if (this.state.shuffled === false){
-      this.combineAndShuffle()
+      this.combineAndShuffle();
       this.setState({
         shuffled: true
       })
     }
+    
+    if (this.state.timer === 0) {
+      this.nextQuestion();
+    }
   }
 
-  handleClick = (e) => {
+  nextQuestion = () => {
     let questionNumber = this.state.questionNumber
     questionNumber++;
-    //Sets the currentquestion state to next question in array
+    //Sets the currentQuestion state to next question in array
     if (questionNumber < this.props.quiz.length ) {
       console.log(this.state.currentQuestion);
       this.setState({
@@ -46,11 +53,12 @@ class PlayQuiz extends Component {
         showFinalScore: true
       })
     }
+  }
 
-
+  handleClick = (e) => {
+    this.nextQuestion();
     if (this.state.currentQuestion.correct_answer === e.target.name){
       this.correct();
-      console.log('ding')
     }
   }
 
@@ -65,11 +73,6 @@ class PlayQuiz extends Component {
 
   reset = () => {
     this.setState({
-      // currentQuestion: {
-      //   correctAnswer: '',
-      //   question: '',
-      //   incorrect_answers: [],
-      // },
       questionNumber: 0,
       score: 0,
       showFinalScore: false,
@@ -77,7 +80,15 @@ class PlayQuiz extends Component {
     this.props.reset();
   }
 
+  countdown = () => {
+    let newTimer = this.state.timer - 1;
+    this.setState({
+      timer: newTimer
+    })
+  }
+
   combineAndShuffle = () => {
+
     let array = [...this.state.currentQuestion.incorrect_answers, this.state.currentQuestion.correct_answer];
 
       const shuffle = (array) => {
@@ -90,6 +101,7 @@ class PlayQuiz extends Component {
         }
         this.setState({
           question_list: array,
+          timer: 30
         })
       
       }
@@ -109,6 +121,7 @@ class PlayQuiz extends Component {
           <div className="centered">
             {/* CONTROLS CLASSNAME TO ALLOW STYLING DIFFERENCED BETWEEN CORRECT AND INCORRECT */}
             {this.state.answerFeedback === "Correct!" ? <h2 className="correct">{this.state.answerFeedback}</h2>: <h2 className="incorrect">{this.state.answerFeedback}</h2>}
+            <p>{this.state.timer}</p>
             <h2>{atob(this.state.currentQuestion.question)}</h2>
             {listQuestions}
           </div>
