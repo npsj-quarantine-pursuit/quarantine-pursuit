@@ -31,7 +31,6 @@ class App extends Component {
       dataReady: true,
       isLoading: false,
     })
-    console.log(this.state.quiz);
   }
 
   // Get quiz data from SelectQuiz component then once dataReady is true redirects to PlayQuiz component
